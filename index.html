@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pitch Deck: MCP for AutoScout24</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Harmony. Background: #F7FAFC (bg-gray-50), Text: #2D3748 (text-gray-800), Accent: #3B82F6 (blue-500/600) -->
+    <!-- Application Structure Plan: A single-page, vertical-scrolling application with a fixed side navigation. This structure transforms the linear slide deck into an explorable dashboard. It begins with a hero section (Title), followed by thematic sections for The Challenge, The Solution, Strategic Impact (with an interactive chart), Company Position, The Roadmap (interactive timeline), and a final Call to Action. This non-linear but guided flow allows stakeholders to digest information at their own pace and focus on areas of interest, making the pitch more effective and modern. -->
+    <!-- Visualization & Content Choices: 
+        - The Challenge: Interactive cards with hover effects to highlight API pain points. Goal: Emphasize the problem visually.
+        - The Solution: A clear, structured diagram built with HTML/CSS. Goal: Demystify the MCP concept.
+        - Strategic Benefits: An animated bar chart (Chart.js) for the primary "Listings Increase" metric, paired with info cards. Goal: Provide a powerful visual anchor for the value proposition.
+        - The Proposal: An interactive, clickable vertical timeline. Goal: Make the roadmap engaging and easy to parse.
+        - All elements are designed to be interactive and informative, replacing static content with an engaging experience. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F7FAFC;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .nav-link.active {
+            color: #3B82F6;
+            transform: scale(1.1);
+        }
+        .timeline-item-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .timeline-item.open .timeline-item-content {
+            max-height: 500px; /* Adjust as needed */
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Side Navigation -->
+    <nav class="hidden lg:block fixed top-1/2 -translate-y-1/2 left-4 z-50">
+        <ul class="flex flex-col space-y-4">
+            <li><a href="#slide-1" class="nav-link p-2 transition-transform duration-200" title="Home">●</a></li>
+            <li><a href="#slide-2" class="nav-link p-2 transition-transform duration-200" title="The Challenge">●</a></li>
+            <li><a href="#slide-3" class="nav-link p-2 transition-transform duration-200" title="The Solution">●</a></li>
+            <li><a href="#slide-4" class="nav-link p-2 transition-transform duration-200" title="Benefits">●</a></li>
+            <li><a href="#slide-5" class="nav-link p-2 transition-transform duration-200" title="Our Position">●</a></li>
+            <li><a href="#slide-6" class="nav-link p-2 transition-transform duration-200" title="The Proposal">●</a></li>
+            <li><a href="#slide-7" class="nav-link p-2 transition-transform duration-200" title="Call to Action">●</a></li>
+        </ul>
+    </nav>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Slide 1: Title -->
+        <section id="slide-1" class="min-h-screen flex flex-col justify-center items-center text-center py-20">
+            <div class="w-full max-w-4xl">
+                <img src="https://placehold.co/150x40/000000/FFFFFF?text=AutoScout24" alt="AutoScout24 Logo" class="mx-auto mb-8 h-10">
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-gray-900">Beyond APIs: Unleashing Our AI Potential with the Model Context Protocol (MCP)</h1>
+                <p class="mt-6 text-lg md:text-xl text-gray-600">Standardizing for the Future of AI-Native Interactions</p>
+                <div class="mt-8 text-md text-gray-500">
+                    <p>Presented by: Sohail</p>
+                    <p>Date: July 9, 2025</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 2: The Challenge -->
+        <section id="slide-2" class="min-h-screen flex flex-col justify-center py-20">
+             <div class="w-full max-w-5xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">The Challenge: Are We Ready for the Next Wave of AI?</h2>
+                <p class="text-lg text-gray-600 text-center mb-12">The world of AI is shifting from simple chatbots to autonomous agents. Our current API structure, while robust, creates friction that limits our ability to lead this transformation. We need to evolve to speak the native language of modern AI.</p>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300">
+                        <h3 class="text-xl font-semibold mb-2 text-red-500">Slow & Costly</h3>
+                        <p>Bespoke "glue code" for every new AI integration slows down development and increases costs, hindering our ability to innovate at pace.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300">
+                        <h3 class="text-xl font-semibold mb-2 text-yellow-500">Brittle & Fragile</h3>
+                        <p>Custom integrations are prone to breaking with API or AI model updates, creating a high maintenance burden for our engineering teams.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-500">Limited Context</h3>
+                        <p>AI struggles to maintain a deep, multi-turn understanding across our various services, limiting the intelligence and personalization of its responses.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: The Solution -->
+        <section id="slide-3" class="min-h-screen flex flex-col justify-center py-20">
+            <div class="w-full max-w-5xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">The Solution: Model Context Protocol (MCP)</h2>
+                <p class="text-lg text-gray-600 text-center mb-12">MCP is not a replacement for our APIs. It's a universal abstraction layer that sits on top, transforming our existing services into intelligent, AI-consumable "tools" that can be discovered and used dynamically.</p>
+                <div class="bg-white p-8 rounded-xl shadow-2xl">
+                    <div class="grid md:grid-cols-5 items-center gap-4 text-center">
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <div class="text-5xl">🤖</div>
+                            <div class="font-bold mt-2">AI Agent</div>
+                            <p class="text-sm text-gray-500">(Gemini, Copilot, etc.)</p>
+                        </div>
+                        <div class="text-3xl font-light text-gray-400">↔</div>
+                        <div class="col-span-1 p-4 bg-green-50 rounded-lg border-2 border-green-500">
+                            <div class="text-5xl">🧩</div>
+                            <div class="font-bold mt-2">MCP Layer</div>
+                            <p class="text-sm text-gray-500">(The Universal Translator)</p>
+                        </div>
+                        <div class="text-3xl font-light text-gray-400">↔</div>
+                        <div class="p-4 bg-gray-100 rounded-lg">
+                            <div class="text-5xl">⚙️</div>
+                            <div class="font-bold mt-2">AutoScout24 APIs</div>
+                            <p class="text-sm text-gray-500">(Listings, Data, Smyle)</p>
+                        </div>
+                    </div>
+                    <div class="mt-8 grid md:grid-cols-3 gap-6 text-left">
+                        <div>
+                            <h4 class="font-semibold text-lg">Dynamic Discovery</h4>
+                            <p class="text-gray-600 mt-1">AI can ask "What can you do?" and instantly understand how to use our services.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg">Semantic Descriptions</h4>
+                            <p class="text-gray-600 mt-1">Our APIs explain themselves in a way AI truly understands, ensuring correct usage.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg">Context Management</h4>
+                            <p class="text-gray-600 mt-1">Enables AI to maintain long-term memory and execute complex, multi-step workflows.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Strategic Benefits -->
+        <section id="slide-4" class="min-h-screen flex flex-col justify-center py-20">
+            <div class="w-full max-w-6xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Strategic Benefits: Why This Matters Now</h2>
+                <p class="text-lg text-gray-600 text-center mb-12">Adopting MCP isn't just a technical upgrade; it's a strategic move that unlocks unprecedented value across our platform, driving growth and solidifying our market leadership.</p>
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-8">
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-semibold text-blue-600">Massive Increase in Listings</h3>
+                            <p class="mt-2 text-gray-600">AI agents in tools like Copilot can proactively prompt dealers to list vehicles, auto-filling details and reducing friction to near zero. This directly converts dealer intent into high-quality listings on our platform.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-semibold text-blue-600">Superior User & Dealer Experience</h3>
+                            <p class="mt-2 text-gray-600">Enable truly intelligent assistants and automated workflows. Imagine dealers delegating inventory optimization or buyers getting highly personalized guidance through a conversational interface.</p>
+                        </div>
+                         <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-semibold text-blue-600">Accelerated Innovation & Scalability</h3>
+                            <p class="mt-2 text-gray-600">Build once, integrate everywhere. Drastically reduce time-to-market for new AI features and future-proof our platform against the rapidly evolving AI landscape.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-2xl">
+                         <h3 class="text-xl font-semibold text-center mb-4">Projected Impact on Listings Volume</h3>
+                        <div class="chart-container">
+                            <canvas id="listingsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Our Position -->
+        <section id="slide-5" class="min-h-screen flex flex-col justify-center py-20">
+            <div class="w-full max-w-5xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Our Unique Position: We Are Ready to Lead</h2>
+                <p class="text-lg text-gray-600 text-center mb-12">We are not starting from scratch. Our existing strengths in data and AI make us perfectly positioned to capitalize on this opportunity and define the future of AI in the automotive marketplace.</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <div class="text-4xl mb-4">🗃️</div>
+                        <h3 class="font-semibold text-lg">Strong Foundation</h3>
+                        <p class="text-sm text-gray-600 mt-2">Robust APIs and an unparalleled understanding of automotive data.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <div class="text-4xl mb-4">💡</div>
+                        <h3 class="font-semibold text-lg">Existing AI Investment</h3>
+                        <p class="text-sm text-gray-600 mt-2">HändlerIQ and AutoMatch are proof of our commitment. MCP amplifies these investments.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <div class="text-4xl mb-4">🏆</div>
+                        <h3 class="font-semibold text-lg">Market Leadership</h3>
+                        <p class="text-sm text-gray-600 mt-2">As a top European marketplace, we can set the standard for AI integration in the automotive sector.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <div class="text-4xl mb-4">🚀</div>
+                        <h3 class="font-semibold text-lg">Competitive Edge</h3>
+                        <p class="text-sm text-gray-600 mt-2">Early adoption will create a moat, attracting more dealers and buyers to our superior AI-powered platform.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: The Proposal -->
+        <section id="slide-6" class="min-h-screen flex flex-col justify-center py-20">
+            <div class="w-full max-w-3xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Our Proposal: A Phased Approach</h2>
+                <p class="text-lg text-gray-600 text-center mb-12">We propose a smart, strategic rollout to mitigate risk, demonstrate value quickly, and ensure a smooth transition to an AI-native architecture.</p>
+                
+                <div id="timeline" class="relative">
+                    <!-- Vertical line -->
+                    <div class="absolute left-5 top-0 h-full w-0.5 bg-blue-200"></div>
+
+                    <!-- Timeline Item 1 -->
+                    <div class="timeline-item pl-12 mb-12 relative cursor-pointer">
+                        <div class="absolute left-5 top-0 transform -translate-x-1/2 w-5 h-5 bg-blue-500 rounded-full border-4 border-white"></div>
+                        <h3 class="text-xl font-bold text-blue-600">Phase 1: Pilot & Proof of Concept</h3>
+                        <p class="text-sm text-gray-500">Q4 2025 - Q1 2026</p>
+                        <div class="timeline-item-content mt-2 bg-gray-50 p-4 rounded-md">
+                            <p><strong>Focus:</strong> Select 2-3 key APIs (e.g., Listing Creation, Market Valuation, **Auto-Catalog**) for MCP exposure.</p>
+                            <p><strong>Goal:</strong> Demonstrate seamless AI integration with a leading LLM for a specific dealer workflow.</p>
+                            <p><strong>Deliverable:</strong> Internal demo of an AI agent using MCP to generate a new listing from a simple prompt, leveraging comprehensive vehicle data.</p>
+                        </div>
+                    </div>
+                    <!-- Timeline Item 2 -->
+                    <div class="timeline-item pl-12 mb-12 relative cursor-pointer">
+                         <div class="absolute left-5 top-0 transform -translate-x-1/2 w-5 h-5 bg-blue-500 rounded-full border-4 border-white"></div>
+                        <h3 class="text-xl font-bold text-blue-600">Phase 2: Expand & Integrate</h3>
+                        <p class="text-sm text-gray-500">H1 2026</p>
+                         <div class="timeline-item-content mt-2 bg-gray-50 p-4 rounded-md">
+                            <p><strong>Focus:</strong> Broaden MCP coverage to more critical APIs (e.g., buyer search, Smyle integration).</p>
+                            <p><strong>Goal:</strong> Integrate MCP into existing internal AI tools and explore external partner integrations.</p>
+                        </div>
+                    </div>
+                    <!-- Timeline Item 3 -->
+                    <div class="timeline-item pl-12 relative cursor-pointer">
+                         <div class="absolute left-5 top-0 transform -translate-x-1/2 w-5 h-5 bg-blue-500 rounded-full border-4 border-white"></div>
+                        <h3 class="text-xl font-bold text-blue-600">Phase 3: Ecosystem & Evangelism</h3>
+                        <p class="text-sm text-gray-500">H2 2026 onwards</p>
+                        <div class="timeline-item-content mt-2 bg-gray-50 p-4 rounded-md">
+                            <p><strong>Focus:</strong> Standardize MCP across all relevant APIs.</p>
+                            <p><strong>Goal:</strong> Position AutoScout24 as a leader in AI-native automotive services, fostering a thriving ecosystem around MCP.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Call to Action -->
+        <section id="slide-7" class="min-h-screen flex flex-col justify-center items-center text-center py-20 bg-blue-600 text-white">
+            <div class="w-full max-w-4xl">
+                <h2 class="text-4xl md:text-5xl font-bold">Let's Drive AutoScout24 into the AI-Native Future</h2>
+                <p class="mt-6 text-lg md:text-xl text-blue-100">To move forward, we need your approval and support.</p>
+                <div class="mt-10 grid md:grid-cols-3 gap-8 text-left">
+                    <div class="bg-blue-700 p-6 rounded-lg">
+                        <h3 class="font-bold text-xl">1. Approve Pilot Phase</h3>
+                        <p class="mt-2 text-blue-200">Grant resources for the dedicated engineering team to kick off the MCP Proof of Concept.</p>
+                    </div>
+                    <div class="bg-blue-700 p-6 rounded-lg">
+                        <h3 class="font-bold text-xl">2. Form Task Force</h3>
+                        <p class="mt-2 text-blue-200">Align Product, Engineering, and Business Development on a unified MCP strategy.</p>
+                    </div>
+                    <div class="bg-blue-700 p-6 rounded-lg">
+                        <h3 class="font-bold text-xl">3. Schedule Follow-Up</h3>
+                        <p class="mt-2 text-blue-200">Commit to a follow-up session to review pilot results and define the next steps for adoption.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+    
+    <footer class="text-center py-8">
+        <p>&copy; 2025 AutoScout24. Pitch by Sohail.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Chart.js implementation
+            const chartCtx = document.getElementById('listingsChart').getContext('2d');
+            const listingsChart = new Chart(chartCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Year 1', 'Year 2 (MCP Pilot)', 'Year 3 (Full Adoption)'],
+                    datasets: [{
+                        label: 'New Listings Volume',
+                        data: [100, 120, 175],
+                        backgroundColor: [
+                            'rgba(156, 163, 175, 0.6)',
+                            'rgba(96, 165, 250, 0.6)',
+                            'rgba(59, 130, 246, 0.8)',
+                        ],
+                        borderColor: [
+                            'rgba(156, 163, 175, 1)',
+                            'rgba(96, 165, 250, 1)',
+                            'rgba(59, 130, 246, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Relative Volume Index'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                             callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('en-US').format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Timeline interaction
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            timelineItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    item.classList.toggle('open');
+                });
+            });
+
+            // Nav link highlighting on scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+
+</body>
+</html>
