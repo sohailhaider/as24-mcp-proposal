@@ -42,12 +42,7 @@
             transform: scale(1.1);
         }
         .timeline-item-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out;
-        }
-        .timeline-item.open .timeline-item-content {
-            max-height: 500px; /* Adjust as needed */
+            max-height: 500px; /* Always expanded */
         }
     </style>
 </head>
@@ -217,7 +212,7 @@
                     <div class="absolute left-5 top-0 h-full w-0.5 bg-blue-200"></div>
 
                     <!-- Timeline Item 1 -->
-                    <div class="timeline-item pl-12 mb-12 relative cursor-pointer">
+                    <div class="timeline-item pl-12 mb-12 relative cursor-pointer open">
                         <div class="absolute left-5 top-0 transform -translate-x-1/2 w-5 h-5 bg-blue-500 rounded-full border-4 border-white"></div>
                         <h3 class="text-xl font-bold text-blue-600">Phase 1: Pilot & Proof of Concept</h3>
                         <p class="text-sm text-gray-500">Q4 2025 - Q1 2026</p>
@@ -228,7 +223,7 @@
                         </div>
                     </div>
                     <!-- Timeline Item 2 -->
-                    <div class="timeline-item pl-12 mb-12 relative cursor-pointer">
+                    <div class="timeline-item pl-12 mb-12 relative cursor-pointer open">
                          <div class="absolute left-5 top-0 transform -translate-x-1/2 w-5 h-5 bg-blue-500 rounded-full border-4 border-white"></div>
                         <h3 class="text-xl font-bold text-blue-600">Phase 2: Expand & Integrate</h3>
                         <p class="text-sm text-gray-500">H1 2026</p>
@@ -238,7 +233,7 @@
                         </div>
                     </div>
                     <!-- Timeline Item 3 -->
-                    <div class="timeline-item pl-12 relative cursor-pointer">
+                    <div class="timeline-item pl-12 relative cursor-pointer open">
                          <div class="absolute left-5 top-0 transform -translate-x-1/2 w-5 h-5 bg-blue-500 rounded-full border-4 border-white"></div>
                         <h3 class="text-xl font-bold text-blue-600">Phase 3: Ecosystem & Evangelism</h3>
                         <p class="text-sm text-gray-500">H2 2026 onwards</p>
@@ -337,15 +332,7 @@
                 }
             });
 
-            // Timeline interaction
-            const timelineItems = document.querySelectorAll('.timeline-item');
-            timelineItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    item.classList.toggle('open');
-                });
-            });
-
-            // Nav link highlighting on scroll
+            // Nav link highlighting on scroll - kept for general navigation, but timeline no longer collapses
             const sections = document.querySelectorAll('section');
             const navLinks = document.querySelectorAll('.nav-link');
 
